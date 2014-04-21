@@ -1,0 +1,32 @@
+<h2><%= @list.name %></h2>
+<p><%= @list.description %></p>
+
+<h3>Stuff to do</h3>
+<% @list.tasks.incomplete.each do |task| %>
+	<% if task.id? %>
+		<ul>
+			<li><%= task.description %> - <%= button_to "Complete", complete_task_path(@list.id, task.id) %>
+			</li>
+		</ul>
+	<% end %>
+<% end %>
+
+<h3>Stuff I've done</h3>
+<% @list.tasks.completed.each do |task| %>
+	<% if task.id? %>
+		<ul>
+			<li><%= task.description %></li>
+		</ul>
+	<% end %>
+<% end %>
+
+<hr />
+
+<%= form_for [@list, @task] do |form| %>
+
+<p><%= form.text_field :description %> <%= form.submit %></p>
+
+<% end %>
+
+<hr />
+<%= link_to "Back to all lists", lists_path %>
